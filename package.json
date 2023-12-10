@@ -1,0 +1,15 @@
+{
+  "name": "my_coderhub",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "sch",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon ./src/main.js"
+  },
+  "dependencies": {
+    "@koa/router": "^12.0.1",
+    "koa": "^2.14.2",
+    "koa-bodyparser": "^4.4.1"
+  }
+}
