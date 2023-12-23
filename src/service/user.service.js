@@ -5,8 +5,8 @@ class UserService {
   // 查询username是否已存在
   async isUsernameExist(username) {
     const statement = `SELECT * FROM users WHERE username = ?;`
-    const [res] = await connection.execute(statement, [username])
-    return res
+    const [userInfo] = await connection.execute(statement, [username])
+    return userInfo[0]
   }
 
   // 创建用户

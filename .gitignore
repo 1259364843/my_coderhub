@@ -107,3 +107,5 @@ dist
 uploads/
 
 yarn.lock
+src/config/keys/private.key
+src/config/keys/public.key
