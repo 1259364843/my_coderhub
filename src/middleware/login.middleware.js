@@ -33,6 +33,10 @@ const verifyLogin = async (ctx, next) => {
 // 验证token
 const verifyAuth = async (ctx, next) => {
   const authorization = ctx.headers.authorization
+  // 没有传递token, 报错
+  if (!authorization) {
+    return ctx.app.emit('error', UNAUTHORIZATION, ctx)
+  }
   const token = authorization.replace('Bearer ', '')
   // 验证token,使用公钥验证
   try {
