@@ -29,5 +29,15 @@ class MomentController {
       data: res
     }
   }
+  // 动态详情查询
+  async detail(ctx, next) {
+    const { momentId } = ctx.params
+    // 根据id查询动态
+    const res = await MomentService.queryById(momentId)
+    ctx.body = {
+      code: '0',
+      data: res
+    }
+  }
 }
 module.exports = new MomentController()
