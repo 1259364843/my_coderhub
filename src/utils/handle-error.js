@@ -1,5 +1,11 @@
 const app = require('../app/index')
-const { NAME_OR_PASSWORD_IS_REQUIRED, USERNAME_IS_EXIST, USERNAME_IS_NOT_EXIST, PASSWORD_IS_INCORRENT, UNAUTHORIZATION } = require('../config/error-constant')
+const {
+  NAME_OR_PASSWORD_IS_REQUIRED,
+  USERNAME_IS_EXIST, USERNAME_IS_NOT_EXIST,
+  PASSWORD_IS_INCORRENT,
+  UNAUTHORIZATION,
+  OPERATION_IS_NOT_ALLOWED
+} = require('../config/error-constant')
 
 // 统一错误处理
 
@@ -34,6 +40,11 @@ app.on('error', (error, ctx) => {
       body = {
         code: '-1005',
         message: '未授权或token无效'
+      }
+    case OPERATION_IS_NOT_ALLOWED:
+      body = {
+        code: '-1006',
+        message: '当前用户无权限操作'
       }
       break;
     default:
