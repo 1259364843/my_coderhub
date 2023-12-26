@@ -33,6 +33,14 @@ class MomentService {
     const [res] = await connection.execute(statement, [momentId])
     return res
   }
+  // 根据id修改动态
+  async update(data) {
+    const { momentId, content } = data
+    const statement =
+      `UPDATE moment SET content = ? WHERE id = ?;`
+    const [res] = await connection.execute(statement, [content, momentId])
+    return res
+  }
 
 }
 
