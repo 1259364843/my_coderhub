@@ -11,6 +11,15 @@ class CommentService {
     const [res] = await connection.execute(statement, [content, momentId, id])
     return res
   }
+  async reply(data) {
+    // 1.获取请求信息
+    const { content, momentId, commentId, id } = data
+    // 2.拼接sql
+    const statement = `INSERT INTO comment (content, moment_id,comment_id, user_id) VALUES (?, ?, ?, ?);`
+    // 3.执行sql并获取返回结果
+    const [res] = await connection.execute(statement, [content, momentId, commentId, id])
+    return res
+  }
 }
 
 module.exports = new CommentService()
