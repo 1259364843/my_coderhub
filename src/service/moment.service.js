@@ -16,20 +16,58 @@ class MomentService {
     // 默认值0 10 不传递query参数时
     const { offset = 0, size = 10 } = data
     const statement =
-      `SELECT u.id,u.username,m.content,m.createAt,m.updateAt, JSON_OBJECT('id',u.id,'username',u.username, 'createTime',u.createAt,'updateTime',u.updateAt) user
-      FROM moment m
-      LEFT JOIN users u ON u.id = m.user_id
-      LIMIT ? OFFSET ?;`
+      `
+      SELECT
+        m.id id,
+        m.content content,
+        m.createAt createTime,
+        m.updateAt updateTime,
+      JSON_OBJECT( 'userId', u.id, 'userName', u.username, 'createTime', u.createAt, 'updateTime', u.updateAt ) user,
+      ( SELECT COUNT(*) FROM COMMENT c WHERE c.moment_id = m.id ) commentCount 
+      FROM
+        moment m
+        LEFT JOIN users u ON u.id = m.user_id 
+        LIMIT ? OFFSET ?;
+      `
     const [res] = await connection.execute(statement, [String(size), String(offset)])
     return res
   }
   // 根据id查询动态详情
   async queryById(momentId) {
     const statement =
-      `SELECT u.id,u.username,m.content,m.createAt,m.updateAt, JSON_OBJECT('id',u.id,'username',u.username, 'createTime',u.createAt,'updateTime',u.updateAt) user
-      FROM moment m
+      `
+      SELECT
+      m.id,
+      m.content,
+      m.createAt,
+      m.updateAt,
+      JSON_OBJECT( 'userId', u.id, 'userName', u.username, 'createTime', u.createAt, 'updateTime', u.updateAt ) user,
+      (
+        JSON_ARRAYAGG(
+          JSON_OBJECT(
+            'id',
+            c.id,
+            'content',
+            c.content,
+            'commentId',
+            c.comment_id,
+            'createTime',
+            c.createAt,
+            'updateTime',
+            c.updateAt,
+            'user', JSON_OBJECT('id', cu.id, 'userName', cu.username)
+          )) 
+      ) commentList 
+    FROM
+      moment m
       LEFT JOIN users u ON u.id = m.user_id
-      WHERE m.id = ?;`
+      LEFT JOIN COMMENT c ON c.moment_id = m.id
+      LEFT JOIN users cu ON cu.id = c.user_id 
+    WHERE
+      m.id = ?
+    GROUP BY
+      m.id;
+      `
     const [res] = await connection.execute(statement, [momentId])
     return res
   }
