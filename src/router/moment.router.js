@@ -25,7 +25,10 @@ momentRouter.delete('/:momentId', verifyAuth, verifyPermission, remove)
  */
 momentRouter.patch('/:momentId', verifyAuth, verifyPermission, update)
 
-
+/**
+ * 动态添加标签
+ */
+momentRouter.post('/:momentId/labels', verifyAuth, verifyPermission)
 
 
 

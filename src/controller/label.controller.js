@@ -11,6 +11,14 @@ class LabelController {
       }
     }
   }
+  async list(ctx, next) {
+    const res = await LabelService.list()
+    ctx.body = {
+      labelList: [
+        ...res
+      ]
+    }
+  }
 }
 
 module.exports = new LabelController()

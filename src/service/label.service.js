@@ -11,6 +11,11 @@ class LabelService {
     const [res] = await connection.execute(statement, [name])
     return res
   }
+  async list() {
+    const statement = `SELECT name FROM label;`
+    const [res] = await connection.execute(statement)
+    return res
+  }
 }
 
 module.exports = new LabelService()

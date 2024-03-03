@@ -4,8 +4,9 @@ const { verifyAuth } = require('../middleware/login.middleware')
 const { verifyPermission } = require('../middleware/permission.middleware')
 
 
-const { create } = require('../controller/label.controller')
+const { create, list } = require('../controller/label.controller')
 // 新增标签
 lableRouter.post('/create', verifyAuth, create)
+lableRouter.get('/list', list)
 
 module.exports = lableRouter
