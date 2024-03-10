@@ -9,7 +9,7 @@ class PermissionService {
     const statement = `SELECT * FROM moment WHERE id = ? AND user_id = ?;`
     // 3.执行sql并获取返回结果
     const [res] = await connection.execute(statement, [momentId, userId])
-    console.log(res);
+    // console.log(res);
     return res.length === 0
   }
   // 检查资源权限
@@ -20,7 +20,6 @@ class PermissionService {
     console.log(statement);
     // 3.执行sql并获取返回结果
     const [res] = await connection.execute(statement, [resourceId, userId])
-    console.log(res, 1);
     return res.length === 0
   }
 

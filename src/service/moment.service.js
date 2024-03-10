@@ -86,6 +86,22 @@ class MomentService {
     const [res] = await connection.execute(statement, [momentId])
     return res
   }
+  // 判断moment是否已经存在label关联
+  async hasLabel(data) {
+    const { momentId, labelId } = data
+    const statement =
+      `SELECT * FROM moment_label WHERE moment_id = ? AND label_id = ?;`
+    const [res] = await connection.execute(statement, [momentId, labelId])
+    return !!res.length
+  }
+  // 动态添加标签关联
+  async addLabel(data) {
+    const { momentId, labelId } = data
+    const statement =
+      `INSERT INTO moment_label(moment_id, label_id) VALUES(?, ?);`
+    const [res] = await connection.execute(statement, [momentId, labelId])
+    return res
+  }
 
 }
 

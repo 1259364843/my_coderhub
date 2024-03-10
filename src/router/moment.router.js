@@ -1,7 +1,9 @@
 const KoaRouter = require('@koa/router')
 const { verifyAuth } = require('../middleware/login.middleware')
 const { verifyPermission } = require('../middleware/permission.middleware')
-const { addOne, getList, detail, update, remove } = require('../controller/moment.controller')
+
+const { verifyLabelExists } = require('../middleware/label.middleware')
+const { addOne, getList, detail, update, remove, addLabels } = require('../controller/moment.controller')
 // 1.创建路由对象
 const momentRouter = new KoaRouter({ prefix: '/moment' })
 
@@ -28,7 +30,7 @@ momentRouter.patch('/:momentId', verifyAuth, verifyPermission, update)
 /**
  * 动态添加标签
  */
-momentRouter.post('/:momentId/labels', verifyAuth, verifyPermission)
+momentRouter.post('/:momentId/labels', verifyAuth, verifyPermission, verifyLabelExists, addLabels)
 
 
 

@@ -16,6 +16,12 @@ class LabelService {
     const [res] = await connection.execute(statement)
     return res
   }
+  // 查询label是否存在
+  async queryLabelByName(name) {
+    const statement = `SELECT * FROM label WHERE name = ?;`
+    const [res] = await connection.execute(statement, [name])
+    return res[0]
+  }
 }
 
 module.exports = new LabelService()
