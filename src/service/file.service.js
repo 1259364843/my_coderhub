@@ -9,5 +9,13 @@ class FileService {
     const [res] = await connection.execute(satatement, [fieldname, mimetype, size, user_id])
     return res
   }
+  // 查询文件信息
+  async queryFileInfo(userId) {
+    const satatement = `
+    SELECT * FROM avatar WHERE user_id = ?;`
+    const [res] = await connection.execute(satatement, [userId])
+    // 返回最后一条数据
+    return res.pop()
+  }
 }
 module.exports = new FileService()

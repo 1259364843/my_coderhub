@@ -1,4 +1,5 @@
 const userService = require('../service/user.service')
+const fileService = require('../service/file.service')
 
 // 用户
 
@@ -30,6 +31,12 @@ class UserController {
       message: "用户新增成功",
       data: res
     }
+  }
+  async showAvatarImage(ctx, next) {
+    // 1.获取用户id
+    const { userId } = ctx.params
+    // 2.获取头像信息
+    const avatarInfo = await fileService.queryFileInfo(userId)
   }
 }
 module.exports = new UserController()
