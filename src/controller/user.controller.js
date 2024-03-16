@@ -1,6 +1,7 @@
 const userService = require('../service/user.service')
 const fileService = require('../service/file.service')
-
+const { UPLOAD_PATH } = require('../config/path')
+const fs = require('fs')
 // 用户
 
 class UserController {
@@ -37,6 +38,11 @@ class UserController {
     const { userId } = ctx.params
     // 2.获取头像信息
     const avatarInfo = await fileService.queryFileInfo(userId)
+    console.log(avatarInfo);
+    // 3.读取头像文件
+    const { filename, mimetype } = avatarInfo
+    ctx.type = mimetype
+    ctx.body = fs.createReadStream(`${UPLOAD_PATH}/${filename}`)
   }
 }
 module.exports = new UserController()

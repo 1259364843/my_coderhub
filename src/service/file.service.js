@@ -2,11 +2,12 @@ const connection = require('../db/database')
 
 class FileService {
   async create(data) {
-    const { fieldname, mimetype, size, encoding, user_id } = data
+    console.log(data);
+    const { filename, mimetype, size, encoding, user_id } = data
     const satatement = `
     INSERT INTO avatar (filename, mimetype, size, user_id) VALUES (?,?,?,?);
     `
-    const [res] = await connection.execute(satatement, [fieldname, mimetype, size, user_id])
+    const [res] = await connection.execute(satatement, [filename, mimetype, size, user_id])
     return res
   }
   // 查询文件信息
